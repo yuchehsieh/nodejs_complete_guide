@@ -1,8 +1,11 @@
-const http = require('http');
-
 const express = require('express');
 
 const app = express();
+
+app.use('/', (req, res, next) => {
+  console.log('Always run this line');
+  next();
+});
 
 app.use((req, res, next) => {
   console.log('In the middleware');
@@ -14,6 +17,8 @@ app.use((req, res, next) => {
   res.send('<h1>Hello from express!!!</h1>');
 });
 
-const server = http.createServer(app);
+app.listen(2000);
 
-server.listen(2000);
+// 等同於：
+// const server = http.createServer(app);
+// server.listen(2000);
