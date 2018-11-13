@@ -13,10 +13,19 @@ const shopRoutes = require('./routes/shop');
 // 不能 parse 全部的東西
 // json, file 那些的要用其他的 parser
 /* ====================================================== */
+
 // 設定 { extended: false }
 // should be able to parse non-default features
+/* ====================================================== */
+
+// express.static 提供權限去讀檔案，通常是 public 資料夾
+// 如果 request 進來包含 .css .js 或者 images
+// 他會去找 public 資料夾下的檔案，等同於已經在 public
+// 所以 .html 的 <link> 不用寫 '/public'
+// 【BTW】可以註冊很多 static 資料夾
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
