@@ -2,10 +2,14 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const expressHbs = require('express-handlebars');
 
 const app = express();
 
-app.set('view engine', 'pug');
+// 註冊新的 templating engine（對於沒有自動安裝的 engine）
+// expressHbs() 會傳回 view engine 所需要的東西再把它指定到 handlebars 使用
+app.engine('hbs', expressHbs());
+app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 const adminData = require('./routes/admin');
