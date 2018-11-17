@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   const products = adminData.products;
-  res.render('shop', { prods: products, docTitle: 'Shop' });
+  res.render('shop', { prods: products, pageTitle: 'Shop', path: '/' });
   // 傳送物件包含 key: name 比較好去 reference
 });
 
