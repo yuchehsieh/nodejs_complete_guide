@@ -18,7 +18,10 @@ router.get('/', (req, res, next) => {
     prods: products,
     pageTitle: 'Shop',
     path: '/',
-    hasProducts: products.length > 0
+    hasProducts: products.length > 0,
+    activeShop: true,
+    productCSS: true
+    // layout: false 不使用 layout 如果前面有設定這邊預設是 true
   });
   // 傳送物件包含 key: name 比較好去 reference
 });

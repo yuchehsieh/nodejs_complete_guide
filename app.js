@@ -8,7 +8,18 @@ const app = express();
 
 // 註冊新的 templating engine（對於沒有自動安裝的 engine）
 // expressHbs() 會傳回 view engine 所需要的東西再把它指定到 handlebars 使用
-app.engine('hbs', expressHbs());
+/* ====================================================== */
+
+// 使用 handlebars 的 layouts 必須到 .engine 這邊更改東西
+// 預設就是 layouts, 所以也可以寫 ({ layoutsDir: 'views', ... })
+app.engine(
+  'hbs',
+  expressHbs({
+    layoutsDir: 'views/layouts/',
+    defaultLayout: 'main-layout',
+    extname: 'hbs'
+  })
+);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
