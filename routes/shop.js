@@ -7,15 +7,15 @@ const adminData = require('./admin');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  // console.log(adminData.products);
-  // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+// .render() 是 express 提供的 method
+// 而且他會找 default templating engine (在 app.js 已經定義好了)
+// 且定義 views 在 views 資料夾下，所以也不用去建立路徑到那個檔案
+// 也不用寫副檔名 (.pug) 因為定義 pug 是 default templating engine
 
-  res.render('shop');
-  // .render() 是 express 提供的 method
-  // 而且他會找 default templating engine (在 app.js 已經定義好了)
-  // 且定義 views 在 views 資料夾下，所以也不用去建立路徑到那個檔案
-  // 也不用寫副檔名 (.pug) 因為定義 pug 是 default templating engine
+router.get('/', (req, res, next) => {
+  const products = adminData.products;
+  res.render('shop', { prods: products, docTitle: 'Shop' });
+  // 傳送物件包含 key: name 比較好去 reference
 });
 
 module.exports = router;
