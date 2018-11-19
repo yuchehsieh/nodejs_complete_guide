@@ -1,4 +1,7 @@
-const products = [];
+const fs = require('fs');
+const path = require('path');
+
+const rootDir = require('../util/path');
 
 module.exports = class Product {
   constructor(t) {
@@ -6,12 +9,27 @@ module.exports = class Product {
   }
 
   save() {
-    products.push(this);
-  }
-  // this 就是被這個 class 實作出來的物件
-  // 正是要儲存進陣列的東西
+    const p = path.join(rootDir, 'data', 'products.json');
 
-  static fetchAll() {
-    return products;
+    fs.readFile(p, (err, fileContent) => {
+      let products = [];
+      if (!err) {
+        products = JSON.parse(fileContent);
+      }
+      products.push(this);
+      fs.writeFile(p, JSON.stringify(products), err => {
+        console.log(err);
+      });
+    });
+  }
+
+  static fetchAll(cb) {
+    const p = path.join(rootDir, 'data', 'products.json');
+    fs.readFile(p, (err, fileContent) => {
+      if (err) {
+        cb([]);
+      }
+      cb(JSON.parse(fileContent));
+    });
   }
 };
