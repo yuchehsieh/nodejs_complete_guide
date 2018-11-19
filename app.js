@@ -26,6 +26,8 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
+const errorController = require('./controllers/error');
+
 // parser 要在全部的 route handler 之前
 // bodyParser.urlencoded() 會自己 parse 完之後呼叫 next();
 // 不能 parse 全部的東西
@@ -48,9 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found' });
-});
+app.use(errorController.get404);
 
 app.listen(2000);
 
