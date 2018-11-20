@@ -2,7 +2,7 @@ const path = require('path');
 
 const express = require('express');
 
-const productsController = require('../controllers/products');
+const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
@@ -11,6 +11,12 @@ const router = express.Router();
 // 且定義 views 在 views 資料夾下，所以也不用去建立路徑到那個檔案
 // 也不用寫副檔名 (.pug) 因為定義 pug 是 default templating engine
 
-router.get('/', productsController.getProduct);
+router.get('/', shopController.getIndex);
+
+router.get('/products', shopController.getProduct);
+
+router.get('/cart', shopController.getCart);
+
+router.get('/checkout', shopController.getChechout);
 
 module.exports = router;
