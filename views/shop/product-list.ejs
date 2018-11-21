@@ -15,15 +15,14 @@
           </header>
           <div class="card__image">
             <img
-              src="https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Ftimedotcom.files.wordpress.com%2F2015%2F06%2F521811839-copy.jpg&w=1000&q=70"
-              alt="A Book"
+              src="<%= product.imageUrl %>"
+              alt="<%= product.title %>"
             />
           </div>
           <div class="card__content">
-            <h2 class="product__price">$19.99</h2>
+            <h2 class="product__price">$<%= product.price %></h2>
             <p class="product__description">
-              A very interesting book about so many even more interesting
-              things!
+              <%= product.description %>
             </p>
           </div>
           <div class="card__actions">
