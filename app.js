@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const expressHbs = require('express-handlebars');
 
+const db = require('./util/database');
+
 const app = express();
 
 // 註冊新的 templating engine（對於沒有自動安裝的 engine）
@@ -43,6 +45,8 @@ const errorController = require('./controllers/error');
 // 他會去找 public 資料夾下的檔案，等同於已經在 public
 // 所以 .html 的 <link> 不用寫 '/public'
 // 【BTW】可以註冊很多 static 資料夾
+
+db.execute('SELECT * FROM products');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
