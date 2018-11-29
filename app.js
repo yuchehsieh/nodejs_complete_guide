@@ -46,14 +46,6 @@ const errorController = require('./controllers/error');
 // 所以 .html 的 <link> 不用寫 '/public'
 // 【BTW】可以註冊很多 static 資料夾
 
-db.execute('SELECT * FROM products')
-  .then(result => {
-    console.log(result[1]);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
