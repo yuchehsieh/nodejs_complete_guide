@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const expressHbs = require('express-handlebars');
 
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 const app = express();
 
@@ -54,8 +54,20 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(2000);
+sequelize
+  .sync()
+  .then(result => {
+    app.listen(2000);
+    // 成功才執行 app.listen()
+  })
+  .catch(err => {
+    console.log(err);
+  });
+// sync 這個 method 他會去找你定義的 models
+// 然後去建立一個他們 table
+// it syncs your models to the database by creating the appropriate tables
 
+// app.listen(2000);
 // 等同於：
 // const server = http.createServer(app);
 // server.listen(2000);
