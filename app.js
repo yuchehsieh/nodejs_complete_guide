@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 // const expressHbs = require('express-handlebars');
 
 const sequelize = require('./util/database');
+const Product = require('./models/product');
+const User = require('./models/user');
 
 const app = express();
 
@@ -54,8 +56,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(result => {
     app.listen(2000);
     // 成功才執行 app.listen()
