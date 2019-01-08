@@ -75,9 +75,9 @@ Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
-  .sync({ force: true })
+  // .sync({ force: true })
   // 一直 call force: true 會洗掉資料
-  // .sync()
+  .sync()
   .then(result => {
     return User.findById(1);
   })
@@ -88,7 +88,9 @@ sequelize
     return Promise.resolve(user);
   })
   .then(user => {
-    // console.log(user);
+    return user.createCart();
+  })
+  .then(cart => {
     app.listen(2000);
   })
   .catch(err => {
