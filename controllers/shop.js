@@ -1,5 +1,7 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
+
+// 移除 Cart, Order 的原因：我們都是透過 user 去得到 cart, order 的資料
+// 並沒有直接使用 Cart, Order 的東西！
 
 exports.getProducts = (req, res, next) => {
   Product.findAll()
@@ -115,6 +117,31 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
     .then(result => {
       res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postOrder = (req, res, next) => {
+  req.user
+    .getCart()
+    .then(cart => {
+      return cart.getProducts();
+    })
+    .then(products => {
+      return req.user
+        .createOrder() // 按下 Buy Now 按鈕再去 create order
+        .then(order => {
+          return order.addProducts(
+            products.map(product => {
+              product.orderItem = { quantity: product.cartItem.quantity };
+              return product;
+            })
+          );
+        })
+        .catch();
+    })
+    .then(result => {
+      res.redirect('/orders');
     })
     .catch(err => console.log(err));
 };
